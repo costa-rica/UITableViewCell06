@@ -105,10 +105,10 @@ class DashboardTableCell:UITableViewCell{
 
         // Constraints for lblDefinition
         NSLayoutConstraint.activate([
-            lblIndepName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            lblIndepName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            lblIndepName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -50),
-            lblIndepName.bottomAnchor.constraint(lessThanOrEqualTo:contentView.bottomAnchor, constant:heightFromPct(percent: -2))
+            lblIndepName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: heightFromPct(percent: 1)),
+            lblIndepName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: widthFromPct(percent: 2)),
+            lblIndepName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: widthFromPct(percent: -4)),
+            lblIndepName.bottomAnchor.constraint(lessThanOrEqualTo:contentView.bottomAnchor, constant:heightFromPct(percent: -1))
         ])
     }
     
@@ -116,10 +116,10 @@ class DashboardTableCell:UITableViewCell{
         if lblDefinitionConstraints.isEmpty {
             // Create constraints only once and store them
             lblDefinitionConstraints = [
-                lblDefinition.topAnchor.constraint(equalTo: lblIndepName.bottomAnchor, constant: 10),
-                lblDefinition.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
-                lblDefinition.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-                lblDefinition.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -50)
+                lblDefinition.topAnchor.constraint(equalTo: lblIndepName.bottomAnchor, constant: heightFromPct(percent: 1)),
+                lblDefinition.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: heightFromPct(percent: -1)),
+                lblDefinition.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: widthFromPct(percent: 2)),
+                lblDefinition.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: widthFromPct(percent: -4))
             ]
         }
         // Activate or deactivate constraints
