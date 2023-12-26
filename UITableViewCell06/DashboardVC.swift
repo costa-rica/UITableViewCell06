@@ -25,7 +25,7 @@ class DashboardVC: UIViewController {
         
         self.row01 = createRow01()
         self.row02 = createRow02()
-        self.arryRows = [self.row01, self.row02]
+        self.arryRows = [self.row01, self.row02, self.row01, self.row02]
         
         self.lblTitle.translatesAutoresizingMaskIntoConstraints=false
         self.lblTitle.text = "Dashboard"
@@ -78,6 +78,7 @@ class DashboardTableCell:UITableViewCell{
             lblDefinition.isHidden = !isLabelVisible
             showLblDef()
             layoutIfNeeded()
+            print("contentView height: \(contentView.frame.size)")
         }
     }
     // MARK: - Initialization
@@ -106,7 +107,8 @@ class DashboardTableCell:UITableViewCell{
         NSLayoutConstraint.activate([
             lblIndepName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             lblIndepName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            lblIndepName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -50)
+            lblIndepName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -50),
+            lblIndepName.bottomAnchor.constraint(lessThanOrEqualTo:contentView.bottomAnchor, constant:heightFromPct(percent: -2))
         ])
     }
     

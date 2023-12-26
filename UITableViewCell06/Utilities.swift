@@ -5,7 +5,7 @@
 //  Created by Nick Rodriguez on 24/12/2023.
 //
 
-import Foundation
+import UIKit
 
 
 func createRow01() -> [String:String]{
@@ -56,4 +56,16 @@ func parseJsonToDictionary(jsonString: String) -> [String: String]? {
     }
 
     return nil
+}
+
+func widthFromPct(percent:Float) -> CGFloat {
+    let screenWidth = UIScreen.main.bounds.width
+    let width = screenWidth * CGFloat(percent/100)
+    return width
+}
+
+func heightFromPct(percent:Float) -> CGFloat {
+    let screenHeight = UIScreen.main.bounds.height
+    let height = screenHeight * CGFloat(percent/100)
+    return height
 }
