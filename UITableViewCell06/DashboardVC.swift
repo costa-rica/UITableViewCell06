@@ -25,7 +25,7 @@ class DashboardVC: UIViewController {
         
         self.row01 = createRow01()
         self.row02 = createRow02()
-        self.arryRows = [self.row01,self.row02]
+        self.arryRows = [self.row01, self.row02]
         
         self.lblTitle.translatesAutoresizingMaskIntoConstraints=false
         self.lblTitle.text = "Dashboard"
@@ -77,6 +77,7 @@ class DashboardTableCell:UITableViewCell{
         didSet {
             print("lblDefinition is hidden")
             lblDefinition.isHidden = !isLabelVisible
+            lblCorrelation.isHidden = !isLabelVisible
             showLblDef()
             layoutIfNeeded()
             print("contentView height: \(contentView.frame.size)")
@@ -98,9 +99,12 @@ class DashboardTableCell:UITableViewCell{
         fatalError("init(coder:) has not been implemented")
     }
     override func layoutSubviews() {
+        super.layoutSubviews()
         print("vwCircle origin: \(vwCircle.frame.origin)")
         print("vwCircle size: \(vwCircle.frame.size)")
         print("fltCellHeight: \(fltCellHeight)")
+        print("lblCorrelation origin: \(lblCorrelation.frame.origin)")
+        print("lblCorrelation size: \(lblCorrelation.frame.size)")
     }
     func setupCell(){
         contentView.addSubview(lblIndepName)
@@ -117,7 +121,7 @@ class DashboardTableCell:UITableViewCell{
         lblDefinition.numberOfLines = 0 // Enable multi-line
 
         contentView.addSubview(vwCircle)
-        vwCircle.translatesAutoresizingMaskIntoConstraints=false
+//        vwCircle.translatesAutoresizingMaskIntoConstraints=false
         vwCircle.accessibilityIdentifier = "vwCircle"
         vwCircle.backgroundColor = .systemBlue
         
@@ -136,7 +140,11 @@ class DashboardTableCell:UITableViewCell{
         vwCircle.frame = CGRect(x: widthFromPct(percent: 80), y: lblIndepName.frame.midY, width: fltDiameter, height: fltDiameter)
         vwCircle.layer.cornerRadius = fltDiameter / 2
         
-
+        lblCorrelation.text = String(format: "%.2f", Double(dictCellInfo["correlationValue"]!) ?? 1.0)
+        contentView.addSubview(lblCorrelation)
+//        lblCorrelation.translatesAutoresizingMaskIntoConstraints=false
+        lblCorrelation.isHidden = true
+        lblCorrelation.frame = CGRect(x: vwCircle.frame.minX+3, y: vwCircle.frame.minY, width: fltDiameter+6, height: fltDiameter)
     }
     
     func showLblDef() {
