@@ -72,6 +72,7 @@ class DashboardTableCell:UITableViewCell{
     var lblDefinition = UILabel()
     var dictCellInfo : [String:String]!
     var lblDefinitionConstraints: [NSLayoutConstraint] = []
+    var vwCircleConstraints: [NSLayoutConstraint] = []
     var isLabelVisible: Bool = false {
         didSet {
             print("lblDefinition is hidden")
@@ -81,6 +82,9 @@ class DashboardTableCell:UITableViewCell{
             print("contentView height: \(contentView.frame.size)")
         }
     }
+    // add circle
+    var vwCircle = UIView()
+    
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -103,13 +107,29 @@ class DashboardTableCell:UITableViewCell{
         lblDefinition.font = UIFont(name: "ArialRoundedMTBold", size: 15)
         lblDefinition.numberOfLines = 0 // Enable multi-line
 
+        contentView.addSubview(vwCircle)
+        vwCircle.translatesAutoresizingMaskIntoConstraints=false
+        vwCircle.accessibilityIdentifier = "vwCircle"
+        vwCircle.backgroundColor = .systemBlue
+        
         // Constraints for lblDefinition
         NSLayoutConstraint.activate([
-            lblIndepName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: heightFromPct(percent: 1)),
+            lblIndepName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: heightFromPct(percent: 2)),
             lblIndepName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: widthFromPct(percent: 2)),
             lblIndepName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: widthFromPct(percent: -4)),
-            lblIndepName.bottomAnchor.constraint(lessThanOrEqualTo:contentView.bottomAnchor, constant:heightFromPct(percent: -1))
+            lblIndepName.bottomAnchor.constraint(lessThanOrEqualTo:contentView.bottomAnchor, constant:heightFromPct(percent: -2)),
         ])
+
+        lblIndepName.sizeToFit()// necessary for vwCircle frame
+        let cellHeight = self.contentView.frame.height
+        print("cellHeight: \(cellHeight)")
+        let diameter = cellHeight - heightFromPct(percent: 1)
+        vwCircle.layer.cornerRadius = diameter / 2
+        vwCircle.frame = CGRect(x: widthFromPct(percent: 80), y: lblIndepName.frame.midY, width: diameter, height: diameter)
+        vwCircle.layer.cornerRadius = diameter / 2
+        
+        print("vwCircle origin: \(vwCircle.frame.origin)")
+        print("vwCircle size: \(vwCircle.frame.size)")
     }
     
     func showLblDef() {
