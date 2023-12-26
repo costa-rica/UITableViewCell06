@@ -21,11 +21,11 @@ class DashboardVC: UIViewController {
         self.tblDashboard.dataSource = self
         self.tblDashboard.register(DashboardTableCell.self, forCellReuseIdentifier: "DashboardTableCell")
         self.tblDashboard.rowHeight = UITableView.automaticDimension
-        self.tblDashboard.estimatedRowHeight = 44
+        self.tblDashboard.estimatedRowHeight = 100
         
         self.row01 = createRow01()
         self.row02 = createRow02()
-        self.arryRows = [self.row01, self.row02, self.row01, self.row02]
+        self.arryRows = [self.row01,self.row02]
         
         self.lblTitle.translatesAutoresizingMaskIntoConstraints=false
         self.lblTitle.text = "Dashboard"
@@ -84,7 +84,11 @@ class DashboardTableCell:UITableViewCell{
     }
     // add circle
     var vwCircle = UIView()
+    var lblCorrelation = UILabel()
     
+    // additional paramters
+    var fltCellHeight = CGFloat()
+    var fltDiameter = CGFloat()
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -92,6 +96,11 @@ class DashboardTableCell:UITableViewCell{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func layoutSubviews() {
+        print("vwCircle origin: \(vwCircle.frame.origin)")
+        print("vwCircle size: \(vwCircle.frame.size)")
+        print("fltCellHeight: \(fltCellHeight)")
     }
     func setupCell(){
         contentView.addSubview(lblIndepName)
@@ -117,19 +126,17 @@ class DashboardTableCell:UITableViewCell{
             lblIndepName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: heightFromPct(percent: 2)),
             lblIndepName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: widthFromPct(percent: 2)),
             lblIndepName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: widthFromPct(percent: -4)),
-            lblIndepName.bottomAnchor.constraint(lessThanOrEqualTo:contentView.bottomAnchor, constant:heightFromPct(percent: -2)),
+            lblIndepName.bottomAnchor.constraint(lessThanOrEqualTo:contentView.bottomAnchor, constant:heightFromPct(percent: -5)),
         ])
 
         lblIndepName.sizeToFit()// necessary for vwCircle frame
-        let cellHeight = self.contentView.frame.height
-        print("cellHeight: \(cellHeight)")
-        let diameter = cellHeight - heightFromPct(percent: 1)
-        vwCircle.layer.cornerRadius = diameter / 2
-        vwCircle.frame = CGRect(x: widthFromPct(percent: 80), y: lblIndepName.frame.midY, width: diameter, height: diameter)
-        vwCircle.layer.cornerRadius = diameter / 2
+        fltCellHeight = self.contentView.frame.height
+        fltDiameter = fltCellHeight - heightFromPct(percent: 1)
+        vwCircle.layer.cornerRadius = fltDiameter / 2
+        vwCircle.frame = CGRect(x: widthFromPct(percent: 80), y: lblIndepName.frame.midY, width: fltDiameter, height: fltDiameter)
+        vwCircle.layer.cornerRadius = fltDiameter / 2
         
-        print("vwCircle origin: \(vwCircle.frame.origin)")
-        print("vwCircle size: \(vwCircle.frame.size)")
+
     }
     
     func showLblDef() {
